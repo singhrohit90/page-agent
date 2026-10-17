@@ -37,7 +37,9 @@ package.json.bak
 .wxt
 
 # AI
-.claude
+.claude/*
+!.claude/agents/
+!.claude/commands/
 .cursor
 .gemini
 .codex
