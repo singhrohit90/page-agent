@@ -1,0 +1,21 @@
+{
+	"permissions": {
+		"allow": [
+			"Bash(npm run build)",
+			"Bash(npm run test:unit)",
+			"Bash(npm run test:smoke)",
+			"Bash(npm run test:live)",
+			"Bash(node --test:*)",
+			"Bash(git status:*)",
+			"Bash(git diff:*)",
+			"Bash(git log:*)"
+		],
+		"deny": [
+			"Read(./.env)",
+			"Read(./.env.local)",
+			"Bash(cat .env)",
+			"Bash(type .env)",
+			"Bash(printenv:*)"
+		]
+	}
+}

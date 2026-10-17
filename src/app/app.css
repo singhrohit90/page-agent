@@ -1,0 +1,9 @@
+.layout {
+	display: flex;
+	min-height: calc(100vh - 48px);
+}
+main {
+	flex: 1;
+	padding: 20px 300px 160px 24px;
+	min-width: 0;
+}

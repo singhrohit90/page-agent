@@ -1,0 +1,94 @@
+<h1>New work order</h1>
+<form class="form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+	<div class="field">
+		<label for="wo-title">Title</label>
+		<input id="wo-title" required aria-required="true" name="title" type="text" formControlName="title" />
+		@if (error('title'); as e) {
+			<p class="error">{{ e }}</p>
+		}
+	</div>
+	<div class="field">
+		<label for="wo-station">Station</label>
+		<select id="wo-station" required aria-required="true" name="station" formControlName="station">
+			<option value="">Select station</option>
+			@for (id of stationIds; track id) {
+				<option [value]="id">{{ id }}</option>
+			}
+		</select>
+		@if (error('station'); as e) {
+			<p class="error">{{ e }}</p>
+		}
+	</div>
+	<div class="field">
+		<fieldset>
+			<legend>Priority</legend>
+			@for (p of priorities; track p) {
+				<span>
+					<input
+						type="radio"
+						name="priority"
+						[id]="'wo-priority-' + p.toLowerCase()"
+						[value]="p"
+						formControlName="priority"
+					/>
+					<label [for]="'wo-priority-' + p.toLowerCase()">{{ p }}</label>
+				</span>
+			}
+		</fieldset>
+	</div>
+	<div class="field">
+		<label for="wo-type">Type</label>
+		<select id="wo-type" required aria-required="true" name="type" formControlName="type">
+			<option value="">Select type</option>
+			@for (t of types; track t) {
+				<option [value]="t">{{ t }}</option>
+			}
+		</select>
+		@if (error('type'); as e) {
+			<p class="error">{{ e }}</p>
+		}
+	</div>
+	<div class="field">
+		<label for="wo-due">Due date</label>
+		<input id="wo-due" required aria-required="true" name="due" type="date" formControlName="due" />
+		@if (error('due'); as e) {
+			<p class="error">{{ e }}</p>
+		}
+	</div>
+	<div class="field">
+		<label for="wo-assignee">Assignee</label>
+		<select id="wo-assignee" required aria-required="true" name="assignee" formControlName="assignee">
+			<option value="">Select assignee</option>
+			@for (t of technicians; track t) {
+				<option [value]="t">{{ t }}</option>
+			}
+		</select>
+		@if (error('assignee'); as e) {
+			<p class="error">{{ e }}</p>
+		}
+	</div>
+	<div class="field">
+		<label for="wo-failure-code">Failure code</label>
+		<input id="wo-failure-code" name="failureCode" type="text" placeholder="E-000" formControlName="failureCode" />
+		@if (error('failureCode'); as e) {
+			<p class="error">{{ e }}</p>
+		}
+	</div>
+	<div class="field">
+		<label for="wo-description">Description</label>
+		<textarea id="wo-description" required aria-required="true" name="description" rows="4" formControlName="description"></textarea>
+		@if (error('description'); as e) {
+			<p class="error">{{ e }}</p>
+		}
+	</div>
+	<div class="field">
+		<span>
+			<input id="wo-notify" type="checkbox" formControlName="notify" />
+			<label for="wo-notify">Notify shift lead</label>
+		</span>
+	</div>
+	<div class="actions">
+		<button type="submit" data-agent-write="Create work order">Create work order</button>
+		<a routerLink="/work-orders">Cancel</a>
+	</div>
+</form>

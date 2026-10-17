@@ -1,0 +1,41 @@
+<h1>Test results</h1>
+<div class="filters">
+	<label for="res-result">Result</label>
+	<select id="res-result" (change)="setParam('result', $any($event.target).value)">
+		<option value="" [selected]="!result()">All results</option>
+		<option value="PASS" [selected]="result() === 'PASS'">PASS</option>
+		<option value="FAIL" [selected]="result() === 'FAIL'">FAIL</option>
+	</select>
+	<label for="res-station">Station</label>
+	<select id="res-station" (change)="setParam('station', $any($event.target).value)">
+		<option value="" [selected]="!station()">All stations</option>
+		@for (id of stationIds; track id) {
+			<option [value]="id" [selected]="station() === id">{{ id }}</option>
+		}
+	</select>
+</div>
+<p id="results-count">Showing {{ rows().length }} of {{ total }} results</p>
+<table id="results-table">
+	<thead>
+		<tr>
+			@for (c of columns; track c.key) {
+				<th [attr.aria-sort]="ariaSort(c.key)">
+					<button type="button" (click)="sortBy(c.key)">{{ c.title }}</button>
+				</th>
+			}
+		</tr>
+	</thead>
+	<tbody>
+		@for (r of rows(); track r.serial) {
+			<tr>
+				<td>{{ r.serial }}</td>
+				<td>{{ r.stationId }}</td>
+				<td>{{ r.product }}</td>
+				<td>{{ r.result }}</td>
+				<td>{{ r.cycleTimeS.toFixed(1) }}</td>
+				<td>{{ r.testedAt }}</td>
+				<td>{{ r.failureCode }}</td>
+			</tr>
+		}
+	</tbody>
+</table>

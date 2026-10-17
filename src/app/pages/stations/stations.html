@@ -1,0 +1,78 @@
+<h1>Test stations</h1>
+<div class="filters">
+	<input
+		id="flt-search"
+		type="text"
+		placeholder="Search by station ID or name"
+		[value]="q() ?? ''"
+		(input)="setParam('q', $any($event.target).value)"
+	/>
+	<label for="flt-line">Line</label>
+	<select id="flt-line" (change)="setParam('line', $any($event.target).value)">
+		<option value="" [selected]="!line()">All lines</option>
+		@for (l of ['L1', 'L2', 'L3', 'L4']; track l) {
+			<option [value]="l" [selected]="line() === l">{{ l }}</option>
+		}
+	</select>
+	<label for="flt-type">Station type</label>
+	<select id="flt-type" (change)="setParam('type', $any($event.target).value)">
+		<option value="" [selected]="!type()">All types</option>
+		@for (t of ['ICT', 'FCT', 'EOL', 'AOI']; track t) {
+			<option [value]="t" [selected]="type() === t">{{ t }}</option>
+		}
+	</select>
+	<label for="flt-status">Status</label>
+	<select id="flt-status" (change)="setParam('status', $any($event.target).value)">
+		<option value="" [selected]="!status()">All statuses</option>
+		@for (s of ['Online', 'Offline', 'Maintenance']; track s) {
+			<option [value]="s" [selected]="status() === s">{{ s }}</option>
+		}
+	</select>
+	<input
+		id="flt-alarms"
+		type="checkbox"
+		[checked]="alarms() === '1'"
+		(change)="setParam('alarms', $any($event.target).checked ? '1' : '')"
+	/>
+	<label for="flt-alarms">Only stations with open alarms</label>
+	<button id="flt-clear" type="button" (click)="clear()">Clear filters</button>
+</div>
+<p id="stations-count">Showing {{ rows().length }} of {{ total }} stations</p>
+<table id="stations-table">
+	<thead>
+		<tr>
+			<th>Station ID</th>
+			<th>Name</th>
+			<th>Line</th>
+			<th>Type</th>
+			<th>Status</th>
+			<th>Open alarms</th>
+			<th>Last calibration</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		@for (s of rows(); track s.id) {
+			<tr>
+				<td>{{ s.id }}</td>
+				<td>{{ s.name }}</td>
+				<td>{{ s.line }}</td>
+				<td>{{ s.type }}</td>
+				<td>{{ s.status }}</td>
+				<td>{{ s.openAlarms }}</td>
+				<td>{{ s.lastCalibration }}</td>
+				<td class="actions">
+					<a [routerLink]="['/results']" [queryParams]="{ station: s.id }">View results</a>
+					<button
+						type="button"
+						class="danger"
+						data-page-agent-not-interactive="true"
+						(click)="decommission(s.id)"
+					>
+						Decommission
+					</button>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

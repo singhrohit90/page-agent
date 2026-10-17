@@ -1,0 +1,21 @@
+<h1>Measurement log</h1>
+<p>10,000 measurements, newest last</p>
+<div class="grid header">
+	<span>ID</span><span>Station</span><span>Parameter</span><span>Value</span><span>Status</span><span>Timestamp</span>
+</div>
+<cdk-virtual-scroll-viewport
+	id="measurements-viewport"
+	itemSize="32"
+	minBufferPx="200"
+	maxBufferPx="400"
+	style="height: 480px"
+>
+	<div class="row grid" *cdkVirtualFor="let m of items; trackBy: trackById">
+		<span>{{ m.id }}</span>
+		<span>{{ m.stationId }}</span>
+		<span>{{ m.parameter }}</span>
+		<span>{{ m.value }}</span>
+		<span>{{ m.status }}</span>
+		<span>{{ m.timestamp }}</span>
+	</div>
+</cdk-virtual-scroll-viewport>

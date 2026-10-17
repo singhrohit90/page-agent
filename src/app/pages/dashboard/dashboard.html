@@ -1,0 +1,8 @@
+<h1>Dashboard</h1>
+<div class="cards">
+	<div class="card">Units tested (14 days): 18,420</div>
+	<div class="card">Average first pass yield (14 days): 94.5%</div>
+	<div class="card">Open work orders: {{ state.workOrders().length }}</div>
+</div>
+<canvas #chart id="fpy-chart" width="720" height="280" role="img" aria-label="Daily first pass yield chart"></canvas>
+<p>Daily first pass yield, last 14 days (2026-10-03 to 2026-10-16)</p>

@@ -1,0 +1,110 @@
+<h1>Settings</h1>
+<form class="form" [formGroup]="form" (ngSubmit)="save()" novalidate>
+	<div class="field">
+		<label for="set-plant-name">Plant display name</label>
+		<input id="set-plant-name" required aria-required="true" type="text" formControlName="plantName" />
+		@if (invalid('plantName')) {
+			<p class="error">Plant display name is required.</p>
+		}
+	</div>
+	<div class="field">
+		<label for="set-timezone">Time zone</label>
+		<select id="set-timezone" required aria-required="true" formControlName="timeZone">
+			@for (z of timeZones; track z) {
+				<option [value]="z">{{ z }}</option>
+			}
+		</select>
+	</div>
+	<div class="field">
+		<label for="set-yield-threshold">Yield alert threshold (%)</label>
+		<input id="set-yield-threshold" required aria-required="true" type="number" step="0.1" min="50" max="100" formControlName="yieldThreshold" />
+		@if (invalid('yieldThreshold')) {
+			<p class="error">Yield alert threshold must be between 50 and 100.</p>
+		}
+	</div>
+	<div class="field">
+		<label for="set-retention-days">Data retention (days)</label>
+		<input id="set-retention-days" required aria-required="true" type="number" min="30" max="3650" formControlName="retentionDays" />
+		@if (invalid('retentionDays')) {
+			<p class="error">Data retention must be between 30 and 3650 days.</p>
+		}
+	</div>
+	<div class="field">
+		<span>
+			<input id="set-email-notifications" type="checkbox" formControlName="emailNotifications" />
+			<label for="set-email-notifications">Email notifications</label>
+		</span>
+	</div>
+	<div class="field">
+		<label for="set-refresh-interval">Dashboard refresh interval</label>
+		<select id="set-refresh-interval" required aria-required="true" formControlName="refreshInterval">
+			@for (i of intervals; track i) {
+				<option [value]="i">{{ i }}</option>
+			}
+		</select>
+	</div>
+	<div class="field">
+		<label for="set-shift-lead-email">Shift lead email</label>
+		<input id="set-shift-lead-email" required aria-required="true" type="email" formControlName="shiftLeadEmail" />
+		@if (invalid('shiftLeadEmail')) {
+			<p class="error">Shift lead email is required.</p>
+		}
+	</div>
+	<div class="actions">
+		<button type="submit" data-agent-write="Save settings">Save settings</button>
+		@if (saved()) {
+			<p role="status" id="settings-saved">Settings saved</p>
+		}
+	</div>
+</form>
+
+<h2>Remembered defaults</h2>
+<section id="remembered-defaults" data-page-agent-not-interactive="true">
+	@if (hasRemembered()) {
+		<p>Stored in this browser from your last work order (select choices only):</p>
+		<ul id="remembered-defaults-list">
+			@if (remembered.workOrder().priority; as v) {
+				<li>Priority: {{ v }}</li>
+			}
+			@if (remembered.workOrder().type; as v) {
+				<li>Type: {{ v }}</li>
+			}
+			@if (remembered.workOrder().assignee; as v) {
+				<li>Assignee: {{ v }}</li>
+			}
+		</ul>
+	} @else {
+		<p id="remembered-defaults-empty">Nothing is remembered.</p>
+	}
+	<button
+		type="button"
+		id="btn-clear-defaults"
+		data-page-agent-not-interactive="true"
+		[disabled]="!hasRemembered()"
+		(click)="remembered.clear()"
+	>
+		Clear remembered defaults
+	</button>
+</section>
+
+<h2>Danger zone</h2>
+<div class="actions">
+	<button
+		type="button"
+		id="btn-reset-data"
+		class="danger"
+		data-page-agent-not-interactive="true"
+		(click)="resetData()"
+	>
+		Reset all demo data
+	</button>
+	<button
+		type="button"
+		id="btn-delete-plant"
+		class="danger"
+		data-page-agent-not-interactive="true"
+		(click)="deletePlant()"
+	>
+		Delete plant
+	</button>
+</div>

@@ -1,0 +1,14 @@
+{
+	"_comment": "Non-secret LLM settings. Safe to edit and commit. The API key is NOT here: put LLM_API_KEY in .env.",
+	"mode": "live",
+	"provider": "anthropic",
+	"baseUrl": "https://api.anthropic.com/v1",
+	"model": "claude-sonnet-5-5",
+	"stripToolChoice": false,
+	"timeoutMs": 90000,
+	"rateLimitPerMinute": 30,
+	"port": 8787,
+	"logFile": "logs/proxy.log",
+	"azure": { "deployment": "", "apiVersion": "2024-10-21" },
+	"anthropic": { "thinking": "between_tools", "strict": true, "beta": "" }
+}
